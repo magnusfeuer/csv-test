@@ -64,6 +64,7 @@ namespace csv {
             // and/or we have found a non-separator character.
             // Add it to the current token.
             token.push_back(ch);
+            escape_mode = false;
         }
 
         // Push back the final token

@@ -117,11 +117,9 @@ int main(int argc, char* argv[])
             { "Fourth Field", "double" }
         }, ',', '\\');
 
-    // Setup a dataset and tie it to the specification
-//    csv::Dataset dataset(spec);
 
     //
-    // Sample CSV data with whitespace variants 
+    // Sample CSV data with whitespace
     //
     static std::string in_csv_data {
         "A1,B1,    1,    1.1\n"
@@ -132,9 +130,6 @@ int main(int argc, char* argv[])
     std::istringstream in_str_stream1(in_csv_data);
     std::ostringstream out_str_stream1;
 
-    //
-    // Feed sample data to ingester and build up the data set.
-    //
     std::size_t record_index = 0;
     std::shared_ptr<csv::Record> record;
 
