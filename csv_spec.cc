@@ -16,6 +16,16 @@
 #include "csv_spec.hh"
 #include <iostream>
 
+
+std::map<std::string, csv::FieldType> csv::Specification::enum_string_map_ = {
+    { "string", csv::FieldType::STRING },
+    { "str", csv::FieldType::STRING },
+    { "int", csv::FieldType::INT64 } ,
+    { "integer", csv::FieldType::INT64 },
+    { "double", csv::FieldType::DOUBLE }
+};
+
+
 csv::Specification::Specification(const std::vector<std::tuple<std::string, std::string> >& spec,
                                   const uint8_t separator_char,
                                   const uint8_t escape_char):
@@ -25,15 +35,15 @@ csv::Specification::Specification(const std::vector<std::tuple<std::string, std:
 {
     for(auto t: spec) {
         // Did we have a correct type?
-        if (enum_string_map.find(std::get<1>(t)) == enum_string_map.end()) {
+        if (enum_string_map_.find(std::get<1>(t)) == enum_string_map_.end()) {
             std::cout << "Incorrect field type: " << std::get<1>(t) << std::endl;
             exit(255);
         }
 
         // Add field name
-        field_names.push_back(std::get<0>(t));
+        field_names_.push_back(std::get<0>(t));
 
         // Add field type enum
-        field_types.push_back(enum_string_map[std::get<0>(t)]);
+        data_types_.push_back(enum_string_map_[std::get<0>(t)]);
     }
 }

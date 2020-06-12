@@ -15,6 +15,7 @@
 
 #include "dataset.hh"
 #include <iostream>
+#include <stdlib.h>
 
 void csv::Dataset::append_record(std::unique_ptr<const csv::Record> record)
 {
@@ -49,6 +50,47 @@ bool csv::Dataset::emit(csv::EmitterIface& emitter,
 
 csv::Record::Record(const Specification& csv_spec, const std::vector<std::string>& tokens)
 {
+    auto dt_iter(csv_spec.data_types().begin());
 
+    // We will assume that csv_spec.data_types().size() == tokens.size()
+    // We will assume that the token length is non-zero.
+    for(const auto& t: tokens) {
+        switch(*dt_iter) {
+
+        case csv::FieldType::INT64: {
+            char* endptr = 0;
+            int64_t val =  strtoll(t.c_str(), &endptr, 0);
+            if (*endptr) {
+                std::cout << "Token " << t << " is not an integer." << std::endl;
+                exit(255);
+            }
+            values_.push_back(val);
+            break;
+        }
+
+
+        case csv::FieldType::DOUBLE: {
+            char* endptr = 0;
+            double val =  strtoll(t.c_str(), &endptr, 0);
+            if (*endptr) {
+                std::cout << "Token " << t << " is not an integer." << std::endl;
+                exit(255);
+            }
+
+            values_.push_back(val);
+            break;
+        }
+
+        case csv::FieldType::STRING: {
+            values_.push_back(t);
+            break;
+        }
+
+        default:
+            std::cout << "Unknown data type: " << int(*dt_iter)  << std::endl;
+            exit(255);
+        }
+        dt_iter++;
+    }
 }
 
