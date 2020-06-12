@@ -28,7 +28,7 @@
 template <typename T>
 bool csv::Factory<T>::register_producer(const std::string& name, std::function<std::shared_ptr<T> (void) > producer)
 {
-    std::cout << &producers_ << ": Registering producer " << name << " as " << typeid(T).name() << std::endl;
+    // std::cout << &producers_ << ": Registering producer " << name << " as " << typeid(T).name() << std::endl;
     producers_.insert(std::pair<std::string, std::function<std::shared_ptr<T> (void)> >(name, producer));
     return true;
 }
@@ -42,7 +42,7 @@ std::shared_ptr<T> csv::Factory<T>::produce(const std::string& name)
     if (pub_iter == producers_.end())
         return 0;
 
-    std::cout << "Producing an instance of " << name << std::endl;
+    // std::cout << "Producing an instance of " << name << std::endl;
     return pub_iter->second();
 }
 

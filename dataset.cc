@@ -44,10 +44,6 @@ bool csv::Dataset::emit(csv::EmitterIface& emitter,
     }
 
     emitter.end(output, specification());
-
-    std::cout << "Dataset::emit(): Emitted " << index << "/" <<
-        record_count() << " records" << std::endl;
-
     return true;
 }
 
@@ -56,6 +52,9 @@ bool csv::Dataset::ingest(csv::IngestionIface& ingester,
                           std::istream& input,
                           const std::string& ingester_config)
 {
+    // Wipe old content
+    records_.clear();
+    record_count_ = 0;
     return ingester.ingest(ingester_config, input, *this);
 }
 

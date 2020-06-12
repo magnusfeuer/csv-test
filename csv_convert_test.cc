@@ -184,20 +184,45 @@ int main(int argc, char* argv[])
         "A3,B3,    3,    3.3\n"
         "A4,B4,    4    ,    4.4   \n"
     };
-    std::istringstream in_str_stream(in_csv_data);
+    std::istringstream in_str_stream1(in_csv_data);
 
     //
     // Feed sample data to ingester and build up the data set.
     //
-    dataset.ingest(*csv_ingester, in_str_stream, "");
+    dataset.ingest(*csv_ingester, in_str_stream1, "");
 
     //
     // Emit back to a CSV string
     //
-    std::ostringstream out_str_stream;
-    dataset.emit(*csv_emitter, out_str_stream, "");
+    std::ostringstream out_str_stream1;
+    dataset.emit(*csv_emitter, out_str_stream1, "");
 
-    std::cout << "Result:" <<std::endl << out_str_stream.str() << std::endl;
-    std::cout << "Done" << std::endl;
+    //
+    // Do a second round to ensure that we have normalized data with
+    // removed whitespaces and same double precision on both input and output.
+    //
+    std::istringstream in_str_stream2(out_str_stream1.str());
+
+    //
+    // Feed sample data to ingester and build up the data set.
+    //
+    dataset.ingest(*csv_ingester, in_str_stream2, "");
+
+    //
+    // Emit back to a secondCSV string
+    //
+    std::ostringstream out_str_stream2;
+    dataset.emit(*csv_emitter, out_str_stream2, "");
+
+    if (out_str_stream1.str() != out_str_stream2.str()) {
+        std::cout << "FAILED" << std::endl << std::endl;
+
+        std::cout << "Original input:" << std::endl << in_csv_data << std::endl << std::endl;
+        std::cout << "First pass:" <<std::endl << out_str_stream1.str() << std::endl<< std::endl;
+        std::cout << "Second pass:" <<std::endl << out_str_stream2.str() << std::endl<< std::endl;
+        exit(255);
+    }
+    std::cout << "pass." << std::endl;
+    exit(0);
 }
 
