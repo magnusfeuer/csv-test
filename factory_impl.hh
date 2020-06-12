@@ -42,6 +42,7 @@ std::shared_ptr<T> csv::Factory<T>::produce(const std::string& name)
     if (pub_iter == producers_.end())
         return 0;
 
+    std::cout << "Producing an instance of " << name << std::endl;
     return pub_iter->second();
 }
 

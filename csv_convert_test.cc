@@ -24,12 +24,6 @@
 #include <getopt.h>
 #include "csv_common.hh"
 
-static std::string csv_data {
-    "A1, B1, 1, 1.1\n"
-    "A2, B2, 2, 2.2\n"
-    "A3, B3, 3, 3.3\n"
-    "A4, B4, 4, 4.4\n"
-};
 
 namespace csv {
     // Dummy class to ingest directly from a string
@@ -89,11 +83,30 @@ bool ingestion_string_registration_ =
 int main(int argc, char* argv[])
 {
     auto csv_ingester(csv::Factory<csv::IngestionIface>::produce("csv_string"));
+    // Setup a specification for the CSV String
     csv::Specification spec({
             { "First Field", "string" },
             { "Second Field", "string" },
             { "Third Field", "int" },
             { "Fourth Field", "double" }
         }, ',', '\\');
+
+
+    // Setup a dataset and tie it to the specification
+    csv::Dataset dataset(spec);
+
+    // Sample data.
+    static std::string csv_data {
+        "A1, B1, 1, 1.1\n"
+        "A2, B2, 2, 2.2\n"
+        "A3, B3, 3, 3.3\n"
+        "A4, B4, 4, 4.4\n"
+    };
+
+    // Feed sample data to ingester and build up the data set.
+    //
+    csv_ingester->ingest(csv_data, dataset);
+
+    std::cout << "Done" << std::endl;
 }
 
