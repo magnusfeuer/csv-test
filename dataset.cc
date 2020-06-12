@@ -13,7 +13,7 @@
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 //
 
-#include "dataset.hh"
+// #include "dataset.hh"
 #include <iostream>
 #include <stdlib.h>
 
@@ -27,7 +27,6 @@ bool csv::Dataset::emit(csv::EmitterIface& emitter,
                         std::ostream& output,
                         const std::string& emitter_config)
 {
-    std::size_t index = 0;
 
     if (!emitter.begin(output, emitter_config, specification(), record_count())) {
         std::cout << "Dataset::emit(): Could not initialize emitter." << std::endl;
@@ -35,12 +34,11 @@ bool csv::Dataset::emit(csv::EmitterIface& emitter,
     }
 
     for(const auto& rec: records_) {
-        if (!emitter.emit_record(output, specification(), *rec, index)) {
-            std::cout << "Dataset::emit(): Could emit record " << index << "/" << record_count() << std::endl;
+        if (!emitter.emit_record(output, specification(), *rec)) {
+            std::cout << "Dataset::emit(): Could emit record " << rec->index() << "/" << record_count() << std::endl;
             emitter.end(output, specification());
             return false;
         }
-        index++;
     }
 
     emitter.end(output, specification());
@@ -55,6 +53,8 @@ bool csv::Dataset::ingest(csv::IngestionIface& ingester,
     // Wipe old content
     records_.clear();
     record_count_ = 0;
-    return ingester.ingest(ingester_config, input, *this);
+    return false;
+//
+//    return ingester.ingest(ingester_config, input, *this);
 }
 
