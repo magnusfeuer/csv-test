@@ -22,34 +22,44 @@
 #define __EMITTER_IFACE_HH__
 #include <cstddef>
 #include <string>
-#include "csv_spec.hh"
-
+#include "specification.hh"
+#include "record.hh"
+#include <ostream>
 namespace csv {
     class EmitterIface {
 
     public:
+        EmitterIface(void) = default;
+
         virtual ~EmitterIface(void) {}
+
         /// Called before records are emitted.
         /// Allows implementation to write headers, etc.
         //
-        // @param csv_spec - CSV specification.
+        // @param specification - CSV specification.
         // @param record_count - the number of times Emit() will be called.
         //
-        virtual bool begin(const std::string& config,
-                           const csv::Specification& csv_spec,
-                           std::size_t record_count) { return false; };
+        virtual bool begin(std::ostream& output,
+                           const std::string& config,
+                           const csv::Specification& specification,
+                           const std::size_t record_count) { return false; };
 
         /// Called once for every record.
         //
         // @param record - The record to emit.
         // @param record_index - The index of the current record.
         //
-        virtual bool emit_record(const class Record& record, std::size_t record_index) { return false; }
+        virtual bool emit_record(std::ostream& output,
+                                 const csv::Specification& specification,
+                                 const class Record& record,
+                                 const std::size_t record_index) { return false; }
 
         /// Called after last record is emmitted.
         //
         // Allows for emitter to close files and clean up
-        virtual bool end(void) { return false; };
+        virtual bool end(std::ostream& output,
+                         const csv::Specification& specification) { return false; };
+    private:
     };
 };
 #endif

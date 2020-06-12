@@ -43,21 +43,26 @@ csv::EmitterJSON::EmitterJSON()
     std::cout << "EmitterJSON::EmitterJSON(): Called" << std::endl;
 }
 
-bool csv::EmitterJSON::begin(const std::string& config,
-                             const Specification& csv_spec,
-                             std::size_t record_count)
+bool csv::EmitterJSON::begin(std::ostream& output,
+                           const std::string& config,
+                           const csv::Specification& specification,
+                           const std::size_t record_count)
 {
     std::cout << "EmitterJSON::begin(" << config << "): Called" << std::endl;
     return true;
 }
 
-bool csv::EmitterJSON::emit_record(const class Record& record, std::size_t record_index)
+bool csv::EmitterJSON::emit_record(std::ostream& output,
+                                 const csv::Specification& specification,
+                                 const class Record& record,
+                                 const std::size_t record_index)
 {
     std::cout << "EmitterJSON::emit_record(): Called" << std::endl;
     return true;
 }
 
-bool csv::EmitterJSON::end(void)
+bool csv::EmitterJSON::end(std::ostream& output,
+                           const csv::Specification& specification)
 {
     std::cout << "EmitterJSON::end(): Called" << std::endl;
     return true;

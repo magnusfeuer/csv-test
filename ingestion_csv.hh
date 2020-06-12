@@ -28,7 +28,9 @@ namespace csv {
         public IngestionIface {
     public:
         IngestionCSV(void);
-        bool ingest(const std::string& source,  class csv::Dataset& target);
+        bool ingest(const std::string& config,
+                    std::istream& input,
+                    class csv::Dataset& target) override;
     };
 };
 #endif

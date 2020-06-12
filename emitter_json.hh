@@ -36,22 +36,26 @@ namespace csv {
         //
         // @param record_count - the number of times Emit() will be called.
         //
-        bool begin(const std::string& config,
-                   const Specification& csv_spec,
-                   std::size_t record_count);
+        bool begin(std::ostream& output,
+                   const std::string& config,
+                   const csv::Specification& specification,
+                   const std::size_t record_count) override;
 
         /// Called once for every record.
         //
         // @param record - The record to emit.
         // @param record_index - The index of the current record.
         //
-        bool emit_record(const class Record& record,
-                         std::size_t record_index);
+        bool emit_record(std::ostream& output,
+                         const csv::Specification& specification,
+                         const class Record& record,
+                         const std::size_t record_index) override;
 
         /// Called after last record is emmitted.
         //
         // Allows for emitter to close files and clean up
-        bool end(void);
+        bool end(std::ostream& output,
+                 const csv::Specification& specification) override;
     private:
         std::string outfile_;
         std::ofstream outstream_;

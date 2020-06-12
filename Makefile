@@ -6,12 +6,14 @@ TARGETS=csv_convert csv_convert_test
 
 OBJ=	csv_common.o \
 	dataset.o \
-	csv_spec.o \
+	record.o \
+	specification.o \
 	emitter_json.o \
 	ingestion_csv.o
 
-HDR=	csv_spec.hh \
+HDR=	specification.hh \
 	csv_common.hh \
+	record.hh \
 	dataset.hh \
 	factory.hh \
 	factory_impl.hh \
@@ -34,7 +36,7 @@ csv_convert: ${OBJ} csv_convert.o
 csv_convert_test: ${OBJ} csv_convert_test.o
 	${CXX} ${CXXFLAGS} $^ -o $@
 
-${OBJ}: ${HDR} 
+${OBJ} csv_convert.o csv_convert_test.o: ${HDR} 
 
 clean:
 	rm -f ${OBJ} ${TARGET}

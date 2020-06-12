@@ -13,7 +13,7 @@
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 //
 
-#include "csv_spec.hh"
+#include "specification.hh"
 #include <iostream>
 
 
@@ -27,11 +27,11 @@ std::map<std::string, csv::FieldType> csv::Specification::enum_string_map_ = {
 
 
 csv::Specification::Specification(const std::vector<std::tuple<std::string, std::string> >& spec,
-                                  const uint8_t separator_char,
-                                  const uint8_t escape_char):
+                                  const char separator_char,
+                                  const char escape_char):
     separator_char_(separator_char),
     escape_char_(escape_char),
-    field_count_(0)
+    field_count_(spec.size())
 {
     for(auto t: spec) {
         // Did we have a correct type?
@@ -41,9 +41,6 @@ csv::Specification::Specification(const std::vector<std::tuple<std::string, std:
         }
 
         // Add field name
-        field_names_.push_back(std::get<0>(t));
-
-        // Add field type enum
-        data_types_.push_back(enum_string_map_[std::get<0>(t)]);
+        fields_.push_back({std::get<0>(t), enum_string_map_[std::get<1>(t)]});
     }
 }

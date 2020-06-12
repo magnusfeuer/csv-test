@@ -21,11 +21,13 @@
 #ifndef __INGESTION_IFACE__
 #define __INGESTION_IFACE__
 #include <string>
-#include "dataset.hh"
+#include <istream>
 namespace csv {
+    class Dataset;
     class IngestionIface {
     public:
-        virtual bool ingest(const std::string& source,
+        virtual bool ingest(const std::string& config,
+                            std::istream& input,
                             csv::Dataset& target) = 0;
 
     };

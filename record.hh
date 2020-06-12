@@ -20,8 +20,8 @@
 /// implementation.
 //  Once constructed, an instance is immutable.
 //
-#ifndef __DATASET_HH__
-#define __DATASET_HH__
+#ifndef __RECORD_HH__
+#define __RECORD_HH__
 #include "specification.hh"
 #include <variant>
 #include <memory>
@@ -32,32 +32,23 @@
 #include <ostream>
 
 namespace csv {
-
-
-    class Dataset {
+    class Record {
     public:
-        Dataset(const Specification& specification):
-            specification_(specification),
-            record_count_(0) {}
+        Record(const Specification& specification,
+               std::size_t index,
+               const std::vector<std::string>& tokens);
 
-        const Specification& specification(void) { return specification_; }
+        /// Retrieve a single field. Throw an exception on type mismatch.
+        template<typename T>
+        const T& field(int field_index) const { std::get<T>(fields_[field_index]); }
 
-        void append_record(std::unique_ptr<const csv::Record> record);
+        const std::vector<std::variant<int64_t, double, std::string> >& fields(void) const { return fields_; };
 
-        std::size_t record_count(void) const { return record_count_; }
-
-        bool emit(csv::EmitterIface& emitter,
-                  std::ostream& output,
-                  const std::string& emitter_config);
-
-        bool ingest(csv::IngestionIface& ingester,
-                    std::istream& input,
-                    const std::string& ingester_config);
+        const std::size_t index() const { return index_; }
 
     private:
-        const Specification specification_;
-        std::size_t record_count_;
-        std::list<std::unique_ptr<const csv::Record> > records_;
+        std::vector<std::variant<int64_t, double, std::string> > fields_;
+        std::size_t index_;
     };
 };
 #endif

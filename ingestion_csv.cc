@@ -21,10 +21,10 @@
 #include "ingestion_factory_impl.hh"
 #include "csv_common.hh"
 #include "dataset.hh"
-#include "csv_spec.hh"
+#include "specification.hh"
 
+// Create a factory producer
 // See emitter_json.hh for details
-
 bool ingestion_csv_registration_ =
     csv::Factory<csv::IngestionIface>::register_producer("csv",
                                                          [](void) -> std::shared_ptr<csv::IngestionIface> {
@@ -36,52 +36,52 @@ csv::IngestionCSV::IngestionCSV()
     std::cout << "IngestionCSV::IngestionCSV(): Called" << std::endl;
 }
 
-bool csv::IngestionCSV::ingest(const std::string& source,  Dataset& target)
+bool csv::IngestionCSV::ingest(const std::string& config,
+                               std::istream& input,
+                               Dataset& target)
 {
-    std::ifstream ifs(source);
     std::string line {""};
-    std::vector<std::string> tokens;
-    uint32_t line_no(0);
+    std::vector<std::string> fields;
+    uint32_t record_index(0);
 
-    std::cout << "IngestionCSV::ingest(" << source << "): Called" << std::endl;
+    std::cout << "IngestionCSV::ingest(" << config << "): Called" << std::endl;
 
-    if (!ifs.is_open()) {
-        std::cout << "Ingest::ingest(): Could not open " << source << std::endl;
-        return false;
-    }
 
     // Read the entire file in one go.
     // FIXME: Make re-entrant by chunking reads.
     //
-    while(!ifs.eof()) {
-        uint32_t token_count(0);
-        std::getline(ifs, line);
-        tokens.resize(0);
-        line_no++;
+    while(!input.eof()) {
+        uint32_t field_count(0);
+        std::getline(input, line);
+        fields.resize(0);
+        record_index++;
 
         // Tokenize the line.
         // Use the separator and escape char from the specification that
         // is tied to the dataset.
-        token_count = csv::tokenize_line(line,
+        field_count = csv::tokenize_line(line,
                                          target.specification().separator_char(),
                                          target.specification().escape_char(),
-                                         tokens);
+                                         fields);
 
         // Check for empty lines, which we can ignore.
-        if (!token_count)
+        if (!field_count)
             continue;
 
         // Did we get the correct number of tokens?
-        if (token_count != target.specification().field_count()) {
-            std::cout << source << ": line: " << line_no <<
-                ": Incorrect number of fields: "<< token_count<<
+        if (field_count != target.specification().field_count()) {
+            std::cout << config << ": line: " << record_index+1 <<
+                ": Incorrect number of fields: "<< field_count <<
                 ". Expected: " << target.specification().field_count() << std::endl;
-            ifs.close();
             return false;
         }
 
+        //
         // Create a new record and add it to the dataset
-        target.append_record(std::make_unique<const csv::Record>(target.specification(), tokens));
+        //
+        target.append_record(std::make_unique<const csv::Record>(target.specification(),
+                                                                 record_index,
+                                                                 fields));
     }
     return true;
 }
