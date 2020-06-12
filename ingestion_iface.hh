@@ -20,15 +20,29 @@
 //
 #ifndef __INGESTION_IFACE__
 #define __INGESTION_IFACE__
-#include <string>
 #include <istream>
+#include <memory>
 namespace csv {
-    class Dataset;
+
+    class Specification;
+    class Record;
+
     class IngestionIface {
     public:
-        virtual bool ingest(const std::string& config,
-                            std::istream& input,
-                            csv::Dataset& target) = 0;
+        /// Read, parse, and emit a record.
+        //
+        /// The implementation of this method shall:
+        /// 1. Read a single record from the 'input' stream.
+        /// 2. Parse the record according to 'specification'.
+        /// 3. Return  a shared pointer to a csv::Record object with the parsed data.
+        //
+        // @return pointer if record was transformed.
+        // @return NULL if end of file.
+        // @return NULL if record could not be parsed.
+        //
+        virtual std::shared_ptr<csv::Record> ingest_record(std::istream& input,
+                                                           const csv::Specification& specification,
+                                                           const std::size_t record_index) = 0;
 
     };
 };

@@ -13,24 +13,26 @@
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 //
 
-#include "dataset.hh"
 #include "emitter_iface.hh"
 #include "ingestion_iface.hh"
 #include "factory.hh"
 #include "factory_impl.hh"
 #include <stdlib.h>
 #include <iostream>
+#include <fstream>
+#include <sstream>
 #include <getopt.h>
 
 
 void usage(char* progname)
 {
-    std::cout << "Usage: " << progname << "-c <csv-file> -t <type> -o <output-file> field_name1:field_type1 [...]" << std::endl;
-    std::cout << "  -c <csv-file>            CSV file to ingest." << std::endl;
-    std::cout << "  -T <type>                CSV Reader type. Default 'csv'" << std::endl;
-    std::cout << "  -t <type>                Output file type." << std::endl;
-    std::cout << "  -o <output-file>         Output file name." << std::endl;
-    std::cout << "  field_nameN:field_typeN  CSV field specification." << std::endl << std::endl;
+    std::cout << "Usage: " << progname << " -c <csv-file> -t <type> -o <output-file>  -f field_name:field_type [-f ...]" << std::endl;
+    std::cout << "  -c <csv-file>             CSV file to ingest." << std::endl;
+    std::cout << "  -T <type>                 CSV Reader type. Default 'csv'" << std::endl;
+    std::cout << "  -t <type>                 Output file type. Default 'json'" << std::endl;
+    std::cout << "  -e <escape-char>          Escape character to use. Default [none]." << std::endl;
+    std::cout << "  -s <separator-char>       Separator character to use. Default ','." << std::endl;
+    std::cout << "  -f field_name:field_type  CSV field specification." << std::endl << std::endl;
     std::cout << "field_name is the name of the given field." << std::endl;
     std::cout << "field_type is data type. Supported values are int, double, and string." << std::endl << std::endl;
 
@@ -57,20 +59,26 @@ int main(int argc, char* argv[])
 {
 
     static struct option long_options[] =  {
-        {"csv-file", required_argument, NULL, 's'},
-        {"reader-type", required_argument, NULL, 's'},
-        {"type", required_argument, NULL, 's'},
-        {"output", required_argument, NULL, 's'},
+        {"csv-file", required_argument, NULL, 'c'},
+        {"reader-type", required_argument, NULL, 'T'},
+        {"type", required_argument, NULL, 't'},
+        {"output", required_argument, NULL, 'o'},
+        {"field", required_argument, NULL, 'f'},
+        {"separator", required_argument, NULL, 's'},
+        {"escape_char", required_argument, NULL, 'e'},
         {NULL, 0, NULL, 0}
     };
 
     std::string csv_file("");
-    std::string output_type("");
+    std::string output_type("json");
     std::string output_file("");
     std::string ingestion_type("csv");
+    char separator_char(',');
+    char escape_char(0);
+    std::vector<std::string> field_spec_str;
     int ch(0);
 
-    while ((ch = getopt_long(argc, argv, "c:t:o:T:", long_options, NULL)) != -1) {
+    while ((ch = getopt_long(argc, argv, "c:t:o:T:f:s:", long_options, NULL)) != -1) {
         switch (ch)
         {
             // short option 't'
@@ -86,8 +94,20 @@ int main(int argc, char* argv[])
             output_type = optarg;
             break;
 
+        case 'f':
+            field_spec_str.push_back(optarg);
+            break;
+
         case 'T':
             ingestion_type = optarg;
+            break;
+
+        case 's':
+            separator_char = *optarg;
+            break;
+
+        case 'e':
+            escape_char = *optarg;
             break;
 
         default:
@@ -114,5 +134,60 @@ int main(int argc, char* argv[])
         usage(argv[0]);
         exit(255);
     }
+
+
+    // Divide the field spec strings up into a tuple vector
+    // that is to be fed into the specification
+    //
+    std::vector<std::tuple<std::string, std::string> > field_spec_tuple;
+    for (const auto& field_spec: field_spec_str) {
+        std::istringstream f(field_spec);
+        std::string name;
+        std::string type;
+
+        if (!getline(f, name, ':') || !getline(f, type, ':')) {
+            std::cout << "Unknown -f format: " << field_spec << std::endl;
+            usage(argv[0]);
+            exit(255);
+        }
+
+        field_spec_tuple.push_back({ name, type });
+    }
+
+
+    // Create a spec
+    csv::Specification spec(field_spec_tuple,
+                            separator_char,
+                            escape_char);
+
+
+    // Create an ingester
+    auto ingester(csv::Factory<csv::IngestionIface>::produce(ingestion_type));
+
+    // Did we fail to create ingester?
+    if (!ingester) {
+        std::cout << "Could not create a reader of type " << ingestion_type << std::endl;
+        usage(argv[0]);
+        exit(255);
+    }
+
+    // Create an ingester
+    auto emitter(csv::Factory<csv::EmitterIface>::produce(output_type));
+
+    // Did we fail to create emitter
+    if (!emitter) {
+        std::cout << "Could not create a writer of type " << output_type << std::endl;
+        usage(argv[0]);
+        exit(255);
+    }
+
+    // Open the input file
+    std::ifstream input(csv_file);
+
+    if (!input.is_open()) {
+        std::cout << "Could not open " << csv_file << " for reading." << std::endl;
+        exit(255);
+    }
+
 }
 

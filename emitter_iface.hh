@@ -46,13 +46,13 @@ namespace csv {
 
         /// Called once for every record.
         //
+        // @param output - The output stream to emit the record to
+        // @param specifcation - The specification of the record to emit
         // @param record - The record to emit.
-        // @param record_index - The index of the current record.
         //
         virtual bool emit_record(std::ostream& output,
                                  const csv::Specification& specification,
-                                 const class Record& record,
-                                 const std::size_t record_index) { return false; }
+                                 const class Record& record) { return false; }
 
         /// Called after last record is emmitted.
         //

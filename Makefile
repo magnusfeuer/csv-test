@@ -5,7 +5,6 @@
 TARGETS=csv_convert csv_convert_test
 
 OBJ=	csv_common.o \
-	dataset.o \
 	record.o \
 	specification.o \
 	emitter_json.o \
@@ -14,7 +13,6 @@ OBJ=	csv_common.o \
 HDR=	specification.hh \
 	csv_common.hh \
 	record.hh \
-	dataset.hh \
 	factory.hh \
 	factory_impl.hh \
 	emitter_iface.hh \

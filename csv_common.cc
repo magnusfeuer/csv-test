@@ -44,7 +44,7 @@ namespace csv {
 
             // Is this an escape character?
             // If so, switch mode and continue.
-            if (ch == escape) {
+            if (escape && ch == escape) {
                 escape_mode = true;
                 continue;
             }
