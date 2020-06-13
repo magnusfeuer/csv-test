@@ -6,18 +6,30 @@ Some experiments with a CSV->JSON/YAML/whatever converter to explore C++.
 
     ./csv_convert_test
     
-## Run on small sample set.
+## Convert CSV to JSON
 
-    $ ./csv_convert -c tst.csv  -o tst.json  -f first_field:string -f second_field:string -f third_field:int -f fourth_field:double
+    $ ./csv_convert -t json -c tst.csv  -o tst.json  -f first_field:string -f second_field:string -f third_field:int -f fourth_field:double
 
     $ cat tst.json
+
+## Convert CSV to YAML
+
+    $ ./csv_convert -t yaml -c tst.csv  -o tst.yaml  -f first_field:string -f second_field:string -f third_field:int -f fourth_field:double
+
+    $ cat tst.yaml
+
+## Convert CSV to CSV
+
+    $ ./csv_convert -t csv -c tst.csv  -o tst1.csv  -f first_field:string -f second_field:string -f third_field:int -f fourth_field:double
+
+    $ cat tst1.csv
     
 
 ## BUGS
 
-1. Emitted JSON strings are not escaped.  
-If a CSV string field contains quotes or other JSON-special
-characters, the output will not be JSON-compliant.
+1. Emitted strings are not escaped.  
+If a CSV string field contains quotes or other JSON/YAML-special
+characters, the output will not be JSON or YAML-compliant.
 
 
 ## IMPROVEMENTS
