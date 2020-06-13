@@ -32,6 +32,8 @@ CXXFLAGS=-std=c++17 -ggdb
 
 all: ${TARGETS}
 
+doc:
+	doxygen Doxyfile
 csv_convert: ${OBJ} csv_convert.o
 	${CXX} ${CXXFLAGS} $^ -o $@
 

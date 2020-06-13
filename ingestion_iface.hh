@@ -27,18 +27,27 @@ namespace csv {
     class Specification;
     class Record;
 
+
+    /// An interface class to read records from an input stream.
+    //
+    /// This class can be subclassed to CSV and other
+    /// input formats that are to be transformed to an output format
+    /// through an csv::EmitterIface subclass.
+    ///
+    /// Subclasses are managed through the csv::Factory<IngestionIFace> template
+    /// instantiation, and should never be instantiated directly.
+    ///
     class IngestionIface {
     public:
-        /// Read, parse, and emit a record.
+        /// Read and parse a single record.
         //
         /// The implementation of this method shall:
-        /// 1. Read a single record from the 'input' stream.
-        /// 2. Parse the record according to 'specification'.
-        /// 3. Return  a shared pointer to a csv::Record object with the parsed data.
+        ///   - Read a single record from \a input
+        ///   - Parse the read record according to \a specification
+        ///   - Return a newly created csv:Record object with the parsed data.
         //
-        // @return pointer if record was transformed.
-        // @return NULL if end of file.
-        // @return NULL if record could not be parsed.
+        /// @return Shared pointer to a newly created csv::Record if record was parsed.
+        /// @return NULL if \a input has reached its end.
         //
         virtual std::shared_ptr<csv::Record> ingest_record(std::istream& input,
                                                            const csv::Specification& specification,

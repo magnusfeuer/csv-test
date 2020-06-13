@@ -35,6 +35,10 @@ Some experiments with a CSV->JSON/YAML/whatever converter to explore C++.
 If a CSV string field contains quotes or other JSON/YAML-special
 characters, the output will not be JSON or YAML-compliant.
 
+2. No way to report a failed record parsing.  
+If `IngestIface::ingest_record()` fails to read a record due to
+parsing error, etc, there is no way for the method to report this fact
+to the caller.
 
 ## IMPROVEMENTS
 
