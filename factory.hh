@@ -24,9 +24,9 @@
 
 namespace csv {
 
-    /// A generic and static factory
+    /// A generic and static factory.
     //
-    /// Template instantiations of this class allows subclasses of \c <T> to
+    /// Template instantiations of this class allows subclasses of \c T to
     /// be instantiated. Subclass registration is done automatically
     /// without the need to write any code outside the subclass itself.
     ///
@@ -63,14 +63,14 @@ namespace csv {
         /// creating new object types.
         ///
         /// The \a producer argument is a function that is called to
-        /// create a new object of a given subclass to \c <T>.
+        /// create a new object of a given subclass to \c T.
         ///
         /// The function \a producer, which returns a shared pointer
-        /// to the baseclass \c <T> is invoked by produce() when the
+        /// to the baseclass \c T is invoked by produce() when the
         /// value of \a name is provided. See class documentation for details.
         ///
-        /// @parameter name - The symbolic name to tie to the the class. 
-        /// @producer producer - The function to call to create a new intsance of the class.
+        /// @param name - The symbolic name to tie to the the class. 
+        /// @param producer - The function to call to create a new intsance of the class.
         ///
         /// @return true - The producer was registered under \a name.
         ///
@@ -99,44 +99,11 @@ namespace csv {
         /// @param result - The vector to fill with the name of all supported classes.
         ///
         /// @return n/a
+        ///
         static void producers(std::list<std::string>& result);
 
     private:
         static std::unordered_map<std::string, std::function<std::shared_ptr<T> (void) > > producers_;
-    };
-
-    /// Base class for producers.
-    //
-    /// Used to define an abstract produce() function that returns
-    /// The baseclass specified by \c <T>.
-    ///
-    /// We need this base class to differentiate between the base class \c <T>
-    /// shared pointer returned by \c produce() and the subclass to \c <T> that
-    /// it actually instantiates.
-    ///
-    /// This class cannot be directly instantiated.
-    ///
-    template<typename T>
-    class ProducerIface {
-    public:
-        /// Abstract definition of the producer. Not used.
-        virtual std::shared_ptr<T> produce(void) const { return NULL; };
-    private:
-        /// Constructor. Cannot be called to prohibit instantiation.
-        ProducerIface() {}
-    };
-
-    /// Template-based producer class.
-    //
-    /// Instantiations of this class 
-    template<typename TBase, typename TDerived>
-    class Producer:
-        public ProducerIface <TBase> {
-    public:
-        std::shared_ptr<TBase> produce(void) const
-        {
-            return std::make_shared<TDerived>();
-        }
     };
 };
 #endif

@@ -17,6 +17,10 @@
 #include <cstdint>
 #include <string>
 #include <vector>
+#include "record.hh"
+#include "ingestion_iface.hh"
+#include "emitter_iface.hh"
+#include <fstream>
 
 namespace csv {
 
@@ -72,5 +76,23 @@ namespace csv {
 
         // Return nu,ber of tokens.
         return res + 1;
+    }
+
+    uint32_t convert(const csv::Specification& specification,
+                     IngestionIface& ingester,
+                     std::istream& input,
+                     EmitterIface& emitter,
+                     std::ostream& output)
+    {
+        uint32_t record_index(0);
+
+        emitter.begin(output, "", specification);
+        while(auto record = ingester.ingest_record(input, specification, record_index)) {
+            emitter.emit_record(output, specification, *record);
+            ++record_index;
+        }
+
+        emitter.end(output, specification);
+        return record_index;
     }
 }

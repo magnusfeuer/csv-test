@@ -27,35 +27,75 @@
 #include "factory.hh"
 
 namespace csv {
+    /// A YAML Emitter class.
+    //
+    /// This class emits records as an array of YAML objects, as described
+    /// in the csv::EmitterIface interface class.
+    ///
     class EmitterYAML: public EmitterIface {
     public:
-        EmitterYAML(void);
+        /// Default constructor.
+        EmitterYAML(void) = default;
 
-        /// Called before records are emitted.
-        /// Allows implementation to write headers, etc.
+        /// Default destructor.
+        ~EmitterYAML(void) = default;
+
+        /// No-op
         //
-        // @param record_count - the number of times Emit() will be called.
+        /// This call does nothing since no YAML headers are needed.
         //
+        /// @param output Not used
+        /// @param config Not used
+        /// @param specification  Not used
+        //
+        /// @return true
+        ///
         bool begin(std::ostream& output,
                    const std::string& config,
                    const csv::Specification& specification) override;
 
-        /// Called once for every record.
+        /// Emit a single YAML record to an output stream.
         //
-        // @param record - The record to emit.
+        /// Will write a single YAML record in the following format:
+        /// \code
+        /// {
+        ///     - <field-name-1>: <value>,
+        ///       <field-name-2>: <value>,
+        ///       ...
+        ///       <field-name-N>: <value>
+        /// }
+        /// \endcode
+        ///
+        /// The field names are retrieved from the provided specification.
+        ///
+        /// The field name/value pairs are written in the same order that they appear in the
+        /// vector returned by record.fields() .
+        ///
+        /// String values will be quoted.
+        ///
+        /// @param output The output file stream to emit the record to to.
+        /// @param specification  Record specification to retrieve name and type from.
+        /// @param record The record to emit.
         //
+        /// @return true - Record was successfully emitted.
+        /// @return false - Record data could not be emitted.
+        ///
         bool emit_record(std::ostream& output,
                          const csv::Specification& specification,
                          const class Record& record) override;
 
-        /// Called after last record is emmitted.
+        /// No-op
         //
-        // Allows for emitter to close files and clean up
+        /// This call does nothing since no YAML footers are needed.
+        //
+        /// @param output Not used
+        /// @param specification  Not used
+        //
+        /// @return true
+        ///
         bool end(std::ostream& output,
                  const csv::Specification& specification) override;
     private:
-        std::string outfile_;
-        std::ofstream outstream_;
     };
 
 

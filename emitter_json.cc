@@ -38,9 +38,6 @@ bool emitter_json_registration_ =
                           return std::make_shared<csv::EmitterJSON>();
                       });
 
-csv::EmitterJSON::EmitterJSON()
-{
-}
 
 bool csv::EmitterJSON::begin(std::ostream& output,
                            const std::string& config,

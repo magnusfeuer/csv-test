@@ -59,10 +59,9 @@ int main(int argc, char* argv[])
     // Parse all records from input string stream and emit them back out
     // as another CSV string
     //
-    while(record = csv_ingester->ingest_record(in_str_stream1, spec, record_index)) {
-        csv_emitter->emit_record(out_str_stream1, spec, *record);
-        ++record_index;
-    }
+    csv::convert(spec,
+                 *csv_ingester, in_str_stream1,
+                 *csv_emitter, out_str_stream1);
 
     //
     // Do a second pass, based on the output CSV string above, to ensure
@@ -71,10 +70,9 @@ int main(int argc, char* argv[])
     //
     std::istringstream in_str_stream2(out_str_stream1.str());
     std::ostringstream out_str_stream2;
-    while(record = csv_ingester->ingest_record(in_str_stream2, spec, record_index)) {
-        csv_emitter->emit_record(out_str_stream2, spec, *record);
-        ++record_index;
-    }
+    csv::convert(spec,
+                 *csv_ingester, in_str_stream2,
+                 *csv_emitter, out_str_stream2);
 
     // First and second output stream should be identical
     if (out_str_stream1.str() != out_str_stream2.str()) {

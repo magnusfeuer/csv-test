@@ -2,6 +2,7 @@
 
 Some experiments with a CSV->JSON/YAML/whatever converter to explore C++.
 
+
 ## Integrity test
 
     ./csv_convert_test
@@ -29,6 +30,12 @@ Some experiments with a CSV->JSON/YAML/whatever converter to explore C++.
     $ cat tst1.csv
     
 
+## DOCUMENTATION:
+
+Please see
+[Doxygen](https://magnusfeuer.github.io/csv-test/html/namespacecsv.html)
+documentation for details.
+
 ## BUGS
 
 1. Emitted strings are not escaped.  
@@ -52,12 +59,7 @@ to the caller.
    Use multiple threads to parse different parts of the CSV file simultaneously.  
    Use mmap() to avoid file operations.
 
-3. Create a wrapper for the full transform cycle__
-   Today the streaming conversion from an ingestion to an emitter
-   is done in a small `while()` loop in the main program. This should
-   be encapsulated in a (new?) class to ensure correct behavior.
-   
-4. Replace dynamic allocation of `Record` in `IngestionIface::ingest_record()`  
+3. Replace dynamic allocation of `Record` in `IngestionIface::ingest_record()`  
    The implementation of `IngestionIface::ingest_record()` needs to create
    a shared object for each record it processes. This is inefficient and should
    be replaced with a caller-provided object reference (from the stack) that the

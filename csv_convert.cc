@@ -15,6 +15,7 @@
 
 #include "emitter_iface.hh"
 #include "ingestion_iface.hh"
+#include "csv_common.hh"
 #include "factory.hh"
 #include "factory_impl.hh"
 #include <stdlib.h>
@@ -211,12 +212,7 @@ int main(int argc, char* argv[])
     // created ingester, and emit them back out through
     // the emitter.
     //
-    emitter->begin(output, "", spec);
-    while(record = ingester->ingest_record(input, spec, record_index)) {
-        emitter->emit_record(output, spec, *record);
-        ++record_index;
-    }
-    emitter->end(output, spec);
+    csv::convert(spec, *ingester, input, *emitter, output);
 
     input.close();
     output.close();

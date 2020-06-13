@@ -30,7 +30,7 @@ namespace csv {
     /// Subclasses are managed through the csv::Factory<EmitterIface> template
     /// instantiation, and should never be instantiated directly.
     ///
-    /// The call flow for an instantiation is like follow.
+    /// The call flow for an instantiation is like follows.
     ///
     /// \code
     /// emitter_obj->begin();
@@ -50,10 +50,6 @@ namespace csv {
     class EmitterIface {
 
     public:
-
-        /// Default virtual destructor
-        virtual ~EmitterIface(void) = default;
-
         /// Emit record headers.
         //
         /// This method is to be redefined to emit necessary header
@@ -69,7 +65,7 @@ namespace csv {
         ///
         virtual bool begin(std::ostream& output,
                            const std::string& config,
-                           const csv::Specification& specification) { return false; };
+                           const csv::Specification& specification) = 0;
 
         /// Emit a single record to an output stream.
         //
@@ -109,7 +105,7 @@ namespace csv {
         /// specification field_type_iter, enabling the code to determine
         /// of the name and data type of each field being written.
         ///
-        /// @param output The output file stream to emit therecord to to.
+        /// @param output The output file stream to emit the record to to.
         /// @param specification  Record specification.
         /// @param record The record to emit.
         //
@@ -117,7 +113,7 @@ namespace csv {
         /// @return false - Record data could not be emitted.
         virtual bool emit_record(std::ostream& output,
                                  const csv::Specification& specification,
-                                 const class Record& record) { return false; }
+                                 const class Record& record)  = 0;
 
         /// Emit footer data and clean up.
         //
@@ -128,14 +124,7 @@ namespace csv {
         /// @return false - Footer data could not be emitted.
         ///
         virtual bool end(std::ostream& output,
-                         const csv::Specification& specification) { return false; };
-
-    protected:
-        /// Default constructor 
-        //
-        /// Protected status means that the EmitterIface class cannot
-        /// be directly instantiated.
-        EmitterIface(void) = default;
+                         const csv::Specification& specification) = 0;
 
     private:
     };

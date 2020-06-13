@@ -46,9 +46,15 @@ namespace csv {
         ///   - Parse the read record according to \a specification
         ///   - Return a newly created csv:Record object with the parsed data.
         //
+        /// @param input The input stream to read and parse a record data from
+        /// @param specification The specification to use when parsing the record data.
+        /// @param record_index The index of the current record.
+        ///                     Incremented by one for each call to ingest_record().
+        ///
         /// @return Shared pointer to a newly created csv::Record if record was parsed.
         /// @return NULL if \a input has reached its end.
         //
+        /// \bug There is no way for this function to report a failed record parsing.
         virtual std::shared_ptr<csv::Record> ingest_record(std::istream& input,
                                                            const csv::Specification& specification,
                                                            const std::size_t record_index) = 0;

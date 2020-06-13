@@ -37,9 +37,6 @@ bool emitter_csv_registration_ =
                           return std::make_shared<csv::EmitterCSV>();
                       });
 
-csv::EmitterCSV::EmitterCSV()
-{
-}
 
 bool csv::EmitterCSV::begin(std::ostream& output,
                            const std::string& config,

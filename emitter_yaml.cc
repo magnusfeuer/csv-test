@@ -37,10 +37,6 @@ bool emitter_yaml_registration_ =
                           return std::make_shared<csv::EmitterYAML>();
                       });
 
-csv::EmitterYAML::EmitterYAML()
-{
-}
-
 bool csv::EmitterYAML::begin(std::ostream& output,
                            const std::string& config,
                            const csv::Specification& specification)

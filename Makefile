@@ -43,4 +43,5 @@ csv_convert_test: ${OBJ} csv_convert_test.o
 ${OBJ} csv_convert.o csv_convert_test.o: ${HDR} 
 
 clean:
-	rm -f ${OBJ} ${TARGET}
+	rm -f ${OBJ} ${TARGETS} csv_convert.o csv_convert_test.o
+	rm -rf html

@@ -32,10 +32,6 @@ bool ingestion_csv_registration_ =
                                                              return std::make_shared<csv::IngestionCSV>();
                                                          });
 
-csv::IngestionCSV::IngestionCSV()
-{
-//    std::cout << "IngestionCSV::IngestionCSV(): Called" << std::endl;
-}
 
 std::shared_ptr<csv::Record> csv::IngestionCSV::ingest_record(std::istream& input,
                                                               const csv::Specification& specification,
