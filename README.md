@@ -1,5 +1,6 @@
-# csv-test
-Some experiments with CSV files.
+# CSV Converter
+
+Some experiments with a CSV->JSON/YAML/whatever converter to explore C++.
 
 ## TEST
 
@@ -16,12 +17,12 @@ Some experiments with CSV files.
 
 1. Emitted JSON strings are not escaped.  
 If a CSV string field contains quotes or other JSON-special
-characters, the output not be JSON-compliant.
+characters, the output will not be JSON-compliant.
 
 
 ## IMPROVEMENTS
 
-1. `Record` data is disconnected from their `Specification`  
+1. `Record` data is disconnected from their `Specification` counterpart  
    We need a way so that each field in a record directly can access
    its specificaiton field name and type. Preferrably without adding 8
    bytes of specification reference to each field.
@@ -31,17 +32,13 @@ characters, the output not be JSON-compliant.
    Use multiple threads to parse different parts of the CSV file simultaneously.  
    Use mmap() to avoid file operations.
 
-3. `IngestionIface::ingest()` should only be friend-callable from `Dataset::ingest()`  
-   Calling `Dataset::ingest()` directly does not reset the target
-   dataset.  We can have a workaround by adding a `Dataset::reset()`
-   method, called by `IngestionIface` implementations, but that is
-   something that the implementer is likely to forget.
-
+3. Create a wrapper for the full transform cycle__
+   Today the streaming conversion from an ingestion to an emitter
+   is done in a small `while()` loop in the main program. This should
+   be encapsulated in a (new?) class to ensure correct behavior.
+   
 4. Replace dynamic allocation of `Record` in `IngestionIface::ingest_record()`  
    The implementation of `IngestionIface::ingest_record()` needs to create
    a shared object for each record it processes. This is inefficient and should
    be replaced with a caller-provided object reference (from the stack) that the
    `ingest_record()` fills out.
-
-       
-

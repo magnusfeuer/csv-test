@@ -23,7 +23,6 @@
 #include <getopt.h>
 #include "csv_common.hh"
 
-
 namespace csv {
     class EmitterString: public EmitterIface {
     public:

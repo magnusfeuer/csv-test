@@ -24,6 +24,7 @@
 #include <getopt.h>
 
 
+
 void usage(char* progname)
 {
     std::cout << "Usage: " << progname << " -c <csv-file> -o <output-file> -f field_name:field_type [-f ...] [-t <type> ]" << std::endl;

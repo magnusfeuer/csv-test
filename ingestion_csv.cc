@@ -18,10 +18,10 @@
 #include <fstream>
 #include "factory.hh"
 #include "factory_impl.hh"
-#include "ingestion_factory_impl.hh"
 #include "csv_common.hh"
 #include "specification.hh"
 #include "record.hh"
+#include "ingestion_factory_impl.hh"
 
 // Create a factory producer
 // See emitter_json.hh for details

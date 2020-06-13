@@ -8,6 +8,7 @@ OBJ=	csv_common.o \
 	record.o \
 	specification.o \
 	emitter_json.o \
+	emitter_yaml.o \
 	ingestion_csv.o
 
 HDR=	specification.hh \
@@ -18,6 +19,7 @@ HDR=	specification.hh \
 	emitter_iface.hh \
 	emitter_factory_impl.hh \
 	emitter_json.hh \
+	emitter_yaml.hh \
 	ingestion_iface.hh \
 	ingestion_factory_impl.hh \
 	ingestion_csv.hh
