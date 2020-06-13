@@ -40,14 +40,12 @@ bool emitter_json_registration_ =
 
 csv::EmitterJSON::EmitterJSON()
 {
-    std::cout << "EmitterJSON::EmitterJSON(): Called" << std::endl;
 }
 
 bool csv::EmitterJSON::begin(std::ostream& output,
                            const std::string& config,
                            const csv::Specification& specification)
 {
-    std::cout << "EmitterJSON::begin(" << config << "): Called" << std::endl;
     //
     // Emit the start of an array.
     //

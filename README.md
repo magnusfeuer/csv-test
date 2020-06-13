@@ -5,23 +5,12 @@ Some experiments with CSV files.
 
     ./csv_convert_test
     
-## Running
+## Run on small sample set.
 
-    ./csv_convert -c <csv-file> -t <type> -o <output-file> -ffield_name:field_type [-f ...]
-      -c <csv-file>             CSV file to ingest.
-      -T <type>                 CSV Reader type. Default 'csv'
-      -t <type>                 Output file type. Default 'json'
-      -o <output-file>          Output file name.
-      -e <escape-char>          Escape character to use. Default [none].
-      -s <separator-char>       Separator character to use. Default ','.
-      -f field_name:field_type  CSV field specification.
+    $ ./csv_convert -c tst.csv  -o tst.json  -f first_field:string -f second_field:string -f third_field:int -f fourth_field:double
 
-`field_name` is the name of the given field.
-`field_type` is data type. Supported values are `int`, `double`, and `string`.
-
-Supported input types are `csv`.  
-Supported output types are `json`.
-
+    $ cat tst.json
+    
 
 ## BUGS
 
