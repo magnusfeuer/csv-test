@@ -2,9 +2,13 @@
 
 Some experiments with a CSV->JSON/YAML/whatever converter to explore C++.
 
-## TEST
+## Integrity test
 
     ./csv_convert_test
+
+## Usage
+
+    ./csv_convert
     
 ## Convert CSV to JSON
 
