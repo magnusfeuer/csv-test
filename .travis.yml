@@ -10,7 +10,7 @@ branches:
 env:
   global:
     - GH_REPO_NAME: csv-test
-    - DOXYFILE: $TRAVIS_BUILD_DIR/Doxyfile>
+    - DOXYFILE: $TRAVIS_BUILD_DIR/Doxyfile
     - GH_REPO_REF: github.com/magnusfeuer/csv-test.git
 
 # Install dependencies
