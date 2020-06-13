@@ -26,13 +26,13 @@
 
 void usage(char* progname)
 {
-    std::cout << "Usage: " << progname << " -c <csv-file> -t <type> -o <output-file>  -f field_name:field_type [-f ...]" << std::endl;
-    std::cout << "  -c <csv-file>             CSV file to ingest." << std::endl;
-    std::cout << "  -T <type>                 CSV Reader type. Default 'csv'" << std::endl;
-    std::cout << "  -t <type>                 Output file type. Default 'json'" << std::endl;
-    std::cout << "  -e <escape-char>          Escape character to use. Default [none]." << std::endl;
-    std::cout << "  -s <separator-char>       Separator character to use. Default ','." << std::endl;
-    std::cout << "  -f field_name:field_type  CSV field specification." << std::endl << std::endl;
+    std::cout << "Usage: " << progname << " -c <csv-file> -o <output-file> -f field_name:field_type [-f ...] [-t <type> ]" << std::endl;
+    std::cout << "  -c <csv-file>               CSV file to ingest." << std::endl;
+    std::cout << "  -T <type>                   CSV Reader type. Default 'csv'" << std::endl;
+    std::cout << "  -t <type>                   Output file type. Default 'json'" << std::endl;
+    std::cout << "  -e <escape-char>            Escape character to use. Default [none]." << std::endl;
+    std::cout << "  -s <separator-char>         Separator character to use. Default ','." << std::endl;
+    std::cout << "  -f <field_name:field_type>  CSV field specification." << std::endl << std::endl;
     std::cout << "field_name is the name of the given field." << std::endl;
     std::cout << "field_type is data type. Supported values are int, double, and string." << std::endl << std::endl;
 
@@ -135,6 +135,11 @@ int main(int argc, char* argv[])
         exit(255);
     }
 
+    if (field_spec_str.size() == 0) {
+        std::cout << "Missing: -f <field-name:field-type>" << std::endl << std::endl;
+        usage(argv[0]);
+        exit(255);
+    }
 
     // Divide the field spec strings up into a tuple vector
     // that is to be fed into the specification
@@ -189,5 +194,31 @@ int main(int argc, char* argv[])
         exit(255);
     }
 
+    // Open the input file
+    std::ofstream output(output_file);
+
+    if (!output.is_open()) {
+        std::cout << "Could not open " << output_file << " for writing." << std::endl;
+        exit(255);
+    }
+
+    std::size_t record_index = 0;
+    std::shared_ptr<csv::Record> record;
+
+    //
+    // Parse all records from input string stream, using the
+    // created ingester, and emit them back out through
+    // the emitter.
+    //
+    emitter->begin(output, "", spec);
+    while(record = ingester->ingest_record(input, spec, record_index)) {
+        emitter->emit_record(output, spec, *record);
+        ++record_index;
+    }
+    emitter->end(output, spec);
+
+    input.close();
+    output.close();
+    exit(0);
 }
 

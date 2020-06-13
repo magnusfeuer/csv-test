@@ -31,8 +31,7 @@ namespace csv {
 
         bool begin(std::ostream& output,
                    const std::string& config,
-                   const csv::Specification& specification,
-                   const std::size_t record_count) override
+                   const csv::Specification& specification) override
         {
             return true;
         }

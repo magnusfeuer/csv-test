@@ -41,8 +41,7 @@ namespace csv {
         //
         virtual bool begin(std::ostream& output,
                            const std::string& config,
-                           const csv::Specification& specification,
-                           const std::size_t record_count) { return false; };
+                           const csv::Specification& specification) { return false; };
 
         /// Called once for every record.
         //

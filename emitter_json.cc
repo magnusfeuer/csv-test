@@ -45,8 +45,7 @@ csv::EmitterJSON::EmitterJSON()
 
 bool csv::EmitterJSON::begin(std::ostream& output,
                            const std::string& config,
-                           const csv::Specification& specification,
-                           const std::size_t record_count)
+                           const csv::Specification& specification)
 {
     std::cout << "EmitterJSON::begin(" << config << "): Called" << std::endl;
     //
@@ -60,13 +59,14 @@ bool csv::EmitterJSON::emit_record(std::ostream& output,
                                  const csv::Specification& specification,
                                  const class Record& record)
 {
-    std::cout << "EmitterJSON::emit_record(): Called" << std::endl;
-
-    std::string line {""};
     auto field_type_iter{ specification.fields().begin() };
 
     // Start with a new object.
-    output << "{" << std::endl;
+    // If this is not the first record, add a comma.
+    if (record.index() > 0)
+        output << "," << std::endl << "{" << std::endl;
+    else
+        output << "{" << std::endl;
 
     for(const auto& field: record.fields()) {
 
@@ -78,16 +78,15 @@ bool csv::EmitterJSON::emit_record(std::ostream& output,
         // to a string field.
         switch(field_type_iter->type_) {
         case csv::FieldType::INT64:
-            output << std::get<int64_t>(field) << std::endl;
+            output << std::get<int64_t>(field);
             break;
 
         case csv::FieldType::DOUBLE:
-            output << std::get<double>(field) << std::endl;
+            output << std::get<double>(field);
             break;
 
         case csv::FieldType::STRING:
-            output << std::get<std::string>(field) << std::endl;
-            line.append(std::get<std::string>(field));
+            output << "\"" << std::get<std::string>(field) << "\"";
             break;
 
         default:
@@ -95,11 +94,17 @@ bool csv::EmitterJSON::emit_record(std::ostream& output,
             exit(255);
         }
         ++field_type_iter;
-    }
 
-            // Add to output stream
-            output << line << std::endl;
-            return true;
+        // Is this the last element in the object?
+        // If not, add a trailing comma.
+        //
+        if (field_type_iter != specification.fields().end()) 
+            output << "," << std::endl;
+        else
+            output << std::endl;
+
+    }
+    output << "}" << std::endl;
 
     return true;
 }
@@ -107,7 +112,7 @@ bool csv::EmitterJSON::emit_record(std::ostream& output,
 bool csv::EmitterJSON::end(std::ostream& output,
                            const csv::Specification& specification)
 {
-    std::cout << "EmitterJSON::end(): Called" << std::endl;
+    output << "]" << std::endl;
     return true;
 }
 
