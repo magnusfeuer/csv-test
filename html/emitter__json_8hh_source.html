@@ -80,48 +80,46 @@ $(function() {
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="comment">// along with this program. If not, see &lt;http://www.gnu.org/licenses/&gt;.</span></div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment">//</span></div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="comment"></span><span class="comment">//</span></div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#ifndef __JSON_EMITTER_HH__</span></div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#define __JSON_EMITTER_HH__</span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="emitter__iface_8hh.html">emitter_iface.hh</a>&quot;</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#include &lt;memory&gt;</span></div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#include &lt;fstream&gt;</span></div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="factory_8hh.html">factory.hh</a>&quot;</span></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacecsv.html">csv</a> {</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="comment">//</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="classcsv_1_1EmitterJSON.html">   35</a></span>&#160;<span class="comment"></span>    <span class="keyword">class </span><a class="code" href="classcsv_1_1EmitterJSON.html">EmitterJSON</a>: <span class="keyword">public</span> <a class="code" href="classcsv_1_1EmitterIface.html">EmitterIface</a> {</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        <a class="code" href="classcsv_1_1EmitterJSON.html#adbe62bca1daf84e30040fa1272e2d635">EmitterJSON</a>(<span class="keywordtype">void</span>) = <span class="keywordflow">default</span>;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        <a class="code" href="classcsv_1_1EmitterJSON.html#aafb02a1828e9b399adc3c85b13c1e520">~EmitterJSON</a>(<span class="keywordtype">void</span>) = <span class="keywordflow">default</span>;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        <span class="comment">//</span></div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="comment"></span>        <span class="keywordtype">bool</span> <a class="code" href="classcsv_1_1EmitterJSON.html#a70b33c78a684e39a5bfac2c6ecde3657">begin</a>(std::ostream&amp; output,</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;                   <span class="keyword">const</span> std::string&amp; config,</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;                   <span class="keyword">const</span> <a class="code" href="classcsv_1_1Specification.html">csv::Specification</a>&amp; specification) <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        <span class="comment">//</span></div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="comment"></span>        <span class="comment">//</span></div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="comment"></span>        <span class="keywordtype">bool</span> <a class="code" href="classcsv_1_1EmitterJSON.html#a1ea48d4ebd56f8d4abf6373001dbf338">emit_record</a>(std::ostream&amp; output,</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;                         <span class="keyword">const</span> <a class="code" href="classcsv_1_1Specification.html">csv::Specification</a>&amp; specification,</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;                         <span class="keyword">const</span> <span class="keyword">class</span> <a class="code" href="classcsv_1_1Record.html">Record</a>&amp; record) <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160; </div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;        <span class="comment">//</span></div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;<span class="comment"></span>        <span class="keywordtype">bool</span> <a class="code" href="classcsv_1_1EmitterJSON.html#a4eb98b0319fd9e0259ac647c10084cf4">end</a>(std::ostream&amp; output,</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;                 <span class="keyword">const</span> <a class="code" href="classcsv_1_1Specification.html">csv::Specification</a>&amp; specification) <span class="keyword">override</span>;</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    };</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;};</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160; </div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#ifndef __JSON_EMITTER_HH__</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#define __JSON_EMITTER_HH__</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="emitter__iface_8hh.html">emitter_iface.hh</a>&quot;</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#include &lt;memory&gt;</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#include &lt;fstream&gt;</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="factory_8hh.html">factory.hh</a>&quot;</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacecsv.html">csv</a> {</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <span class="comment">//</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="classcsv_1_1EmitterJSON.html">   30</a></span>&#160;<span class="comment"></span>    <span class="keyword">class </span><a class="code" href="classcsv_1_1EmitterJSON.html">EmitterJSON</a>: <span class="keyword">public</span> <a class="code" href="classcsv_1_1EmitterIface.html">EmitterIface</a> {</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        <a class="code" href="classcsv_1_1EmitterJSON.html#adbe62bca1daf84e30040fa1272e2d635">EmitterJSON</a>(<span class="keywordtype">void</span>) = <span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        <a class="code" href="classcsv_1_1EmitterJSON.html#aafb02a1828e9b399adc3c85b13c1e520">~EmitterJSON</a>(<span class="keywordtype">void</span>) = <span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        <span class="comment">//</span></div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="comment"></span>        <span class="keywordtype">bool</span> <a class="code" href="classcsv_1_1EmitterJSON.html#a70b33c78a684e39a5bfac2c6ecde3657">begin</a>(std::ostream&amp; output,</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;                   <span class="keyword">const</span> std::string&amp; config,</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;                   <span class="keyword">const</span> <a class="code" href="classcsv_1_1Specification.html">csv::Specification</a>&amp; specification) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        <span class="comment">//</span></div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="comment"></span>        <span class="comment">//</span></div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;<span class="comment"></span>        <span class="keywordtype">bool</span> <a class="code" href="classcsv_1_1EmitterJSON.html#a1ea48d4ebd56f8d4abf6373001dbf338">emit_record</a>(std::ostream&amp; output,</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;                         <span class="keyword">const</span> <a class="code" href="classcsv_1_1Specification.html">csv::Specification</a>&amp; specification,</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;                         <span class="keyword">const</span> <span class="keyword">class</span> <a class="code" href="classcsv_1_1Record.html">Record</a>&amp; record) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160; </div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        <span class="comment">//</span></div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="comment"></span>        <span class="keywordtype">bool</span> <a class="code" href="classcsv_1_1EmitterJSON.html#a4eb98b0319fd9e0259ac647c10084cf4">end</a>(std::ostream&amp; output,</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;                 <span class="keyword">const</span> <a class="code" href="classcsv_1_1Specification.html">csv::Specification</a>&amp; specification) <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    };</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;};</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160; </div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="afactory_8hh_html"><div class="ttname"><a href="factory_8hh.html">factory.hh</a></div></div>
 <div class="ttc" id="aclasscsv_1_1EmitterIface_html"><div class="ttname"><a href="classcsv_1_1EmitterIface.html">csv::EmitterIface</a></div><div class="ttdoc">An interface class to emit records to an output stream.</div><div class="ttdef"><b>Definition:</b> emitter_iface.hh:50</div></div>
-<div class="ttc" id="anamespacecsv_html"><div class="ttname"><a href="namespacecsv.html">csv</a></div><div class="ttdoc">Called by DataSet emit records.</div><div class="ttdef"><b>Definition:</b> csv_common.cc:25</div></div>
-<div class="ttc" id="aclasscsv_1_1EmitterJSON_html"><div class="ttname"><a href="classcsv_1_1EmitterJSON.html">csv::EmitterJSON</a></div><div class="ttdoc">A JSON Emitter class.</div><div class="ttdef"><b>Definition:</b> emitter_json.hh:35</div></div>
+<div class="ttc" id="anamespacecsv_html"><div class="ttname"><a href="namespacecsv.html">csv</a></div><div class="ttdef"><b>Definition:</b> csv_common.cc:25</div></div>
+<div class="ttc" id="aclasscsv_1_1EmitterJSON_html"><div class="ttname"><a href="classcsv_1_1EmitterJSON.html">csv::EmitterJSON</a></div><div class="ttdoc">A JSON Emitter class.</div><div class="ttdef"><b>Definition:</b> emitter_json.hh:30</div></div>
 <div class="ttc" id="aclasscsv_1_1EmitterJSON_html_aafb02a1828e9b399adc3c85b13c1e520"><div class="ttname"><a href="classcsv_1_1EmitterJSON.html#aafb02a1828e9b399adc3c85b13c1e520">csv::EmitterJSON::~EmitterJSON</a></div><div class="ttdeci">~EmitterJSON(void)=default</div><div class="ttdoc">Default destructor.</div></div>
 <div class="ttc" id="aclasscsv_1_1EmitterJSON_html_a4eb98b0319fd9e0259ac647c10084cf4"><div class="ttname"><a href="classcsv_1_1EmitterJSON.html#a4eb98b0319fd9e0259ac647c10084cf4">csv::EmitterJSON::end</a></div><div class="ttdeci">bool end(std::ostream &amp;output, const csv::Specification &amp;specification) override</div><div class="ttdoc">Emit the JSON footer.</div><div class="ttdef"><b>Definition:</b> emitter_json.cc:107</div></div>
 <div class="ttc" id="aclasscsv_1_1Record_html"><div class="ttname"><a href="classcsv_1_1Record.html">csv::Record</a></div><div class="ttdoc">A single record with parsed data.</div><div class="ttdef"><b>Definition:</b> record.hh:39</div></div>

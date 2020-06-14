@@ -93,7 +93,7 @@ $(function() {
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;                                  std::vector&lt;std::string&gt;&amp; result);</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <span class="keyword">class </span><a class="code" href="classIngestionIface.html">IngestionIface</a>;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keyword">class </span><a class="code" href="classEmitterIface.html">EmitterIface</a>;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keyword">class </span>EmitterIface;</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keyword">class </span>Specification;</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="comment">//</span></div>
@@ -106,8 +106,7 @@ $(function() {
 <div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclasscsv_1_1EmitterIface_html"><div class="ttname"><a href="classcsv_1_1EmitterIface.html">csv::EmitterIface</a></div><div class="ttdoc">An interface class to emit records to an output stream.</div><div class="ttdef"><b>Definition:</b> emitter_iface.hh:50</div></div>
-<div class="ttc" id="anamespacecsv_html"><div class="ttname"><a href="namespacecsv.html">csv</a></div><div class="ttdoc">Called by DataSet emit records.</div><div class="ttdef"><b>Definition:</b> csv_common.cc:25</div></div>
-<div class="ttc" id="aclassEmitterIface_html"><div class="ttname"><a href="classEmitterIface.html">EmitterIface</a></div></div>
+<div class="ttc" id="anamespacecsv_html"><div class="ttname"><a href="namespacecsv.html">csv</a></div><div class="ttdef"><b>Definition:</b> csv_common.cc:25</div></div>
 <div class="ttc" id="anamespacecsv_html_a56481a5e642045a8dac5c8505a262eb2"><div class="ttname"><a href="namespacecsv.html#a56481a5e642045a8dac5c8505a262eb2">csv::convert</a></div><div class="ttdeci">uint32_t convert(const csv::Specification &amp;specification, IngestionIface &amp;ingester, std::istream &amp;input, EmitterIface &amp;emitter, std::ostream &amp;output)</div><div class="ttdoc">Convert all records from an input stream to a new format.</div><div class="ttdef"><b>Definition:</b> csv_common.cc:81</div></div>
 <div class="ttc" id="aclassIngestionIface_html"><div class="ttname"><a href="classIngestionIface.html">IngestionIface</a></div></div>
 <div class="ttc" id="anamespacecsv_html_aad7c65a00c0f359c00a4676d57821fb2"><div class="ttname"><a href="namespacecsv.html#aad7c65a00c0f359c00a4676d57821fb2">csv::tokenize_line</a></div><div class="ttdeci">uint32_t tokenize_line(const std::string &amp;line, uint8_t separator, uint8_t escape, std::vector&lt; std::string &gt; &amp;result)</div><div class="ttdoc">Extract fields from a single line.</div><div class="ttdef"><b>Definition:</b> csv_common.cc:33</div></div>

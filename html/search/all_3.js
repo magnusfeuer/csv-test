@@ -13,7 +13,7 @@ var searchData=
   ['emitter_5fyaml_2ehh_21',['emitter_yaml.hh',['../emitter__yaml_8hh.html',1,'']]],
   ['emitter_5fyaml_5fregistration_5f_22',['emitter_yaml_registration_',['../emitter__yaml_8cc.html#a8177313d85ec2066b3c120f6114a9c65',1,'emitter_yaml.cc']]],
   ['emittercsv_23',['EmitterCSV',['../classcsv_1_1EmitterCSV.html',1,'csv::EmitterCSV'],['../classcsv_1_1EmitterCSV.html#a25541883dc43d8de9982642cd3576904',1,'csv::EmitterCSV::EmitterCSV()']]],
-  ['emitteriface_24',['EmitterIface',['../classcsv_1_1EmitterIface.html',1,'csv::EmitterIface'],['../classEmitterIface.html',1,'EmitterIface']]],
+  ['emitteriface_24',['EmitterIface',['../classcsv_1_1EmitterIface.html',1,'csv']]],
   ['emitterjson_25',['EmitterJSON',['../classcsv_1_1EmitterJSON.html',1,'csv::EmitterJSON'],['../classcsv_1_1EmitterJSON.html#adbe62bca1daf84e30040fa1272e2d635',1,'csv::EmitterJSON::EmitterJSON()']]],
   ['emitteryaml_26',['EmitterYAML',['../classcsv_1_1EmitterYAML.html',1,'csv::EmitterYAML'],['../classcsv_1_1EmitterYAML.html#ac7b9b49c328c2351aed1d92441aeeffa',1,'csv::EmitterYAML::EmitterYAML()']]],
   ['end_27',['end',['../classcsv_1_1EmitterCSV.html#acf809bd315e273dbe90c61e5b1b035bc',1,'csv::EmitterCSV::end()'],['../classcsv_1_1EmitterIface.html#ad007e69376ed49e1a60b4c2b646570f3',1,'csv::EmitterIface::end()'],['../classcsv_1_1EmitterJSON.html#a4eb98b0319fd9e0259ac647c10084cf4',1,'csv::EmitterJSON::end()'],['../classcsv_1_1EmitterYAML.html#aabd30cfcfe173e9afa5ecc4e62ffe0ee',1,'csv::EmitterYAML::end()']]],
