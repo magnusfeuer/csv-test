@@ -101,13 +101,13 @@ BUGS</h1>
 <h1><a class="anchor" id="autotoc_md8"></a>
 IMPROVEMENTS</h1>
 <ol type="1">
-<li><code><a class="el" href="classRecord.html">Record</a></code> data is disconnected from their <code>Specification</code> counterpart <br  />
+<li><code>Record</code> data is disconnected from their <code>Specification</code> counterpart <br  />
  We need a way so that each field in a record directly can access its specificaiton field name and type. Preferrably without adding 8 bytes of specification reference to each field.</li>
 <li>Speed <br  />
  Using vanilla C++ string and file processing is extremely slow. <br  />
  Use multiple threads to parse different parts of the CSV file simultaneously. <br  />
  Use mmap() to avoid file operations.</li>
-<li>Replace dynamic allocation of <code><a class="el" href="classRecord.html">Record</a></code> in <code>IngestionIface::ingest_record()</code> <br  />
+<li>Replace dynamic allocation of <code>Record</code> in <code>IngestionIface::ingest_record()</code> <br  />
  The implementation of <code>IngestionIface::ingest_record()</code> needs to create a shared object for each record it processes. This is inefficient and should be replaced with a caller-provided object reference (from the stack) that the <code>ingest_record()</code> fills out. </li>
 </ol>
 </div></div><!-- contents -->
