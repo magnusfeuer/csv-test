@@ -81,6 +81,7 @@ $(function() {
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:aa068a21a6769778befe95ee819f5e234"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcsv_1_1Record.html#aa068a21a6769778befe95ee819f5e234">Record</a> (const <a class="el" href="classcsv_1_1Specification.html">Specification</a> &amp;specification, std::size_t <a class="el" href="classcsv_1_1Record.html#a6bcefcd104cf20bb6d12779036528a22">index</a>, const std::vector&lt; std::string &gt; &amp;tokens)</td></tr>
+<tr class="memdesc:aa068a21a6769778befe95ee819f5e234"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="classcsv_1_1Record.html#aa068a21a6769778befe95ee819f5e234">More...</a><br /></td></tr>
 <tr class="separator:aa068a21a6769778befe95ee819f5e234"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a431c641954e8134165d1636277c65be7"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a431c641954e8134165d1636277c65be7"><td class="memTemplItemLeft" align="right" valign="top">const T &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classcsv_1_1Record.html#a431c641954e8134165d1636277c65be7">field</a> (int field_index) const</td></tr>
@@ -96,7 +97,7 @@ Public Member Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A single record with parsed data. </p>
 <p>This class stores data for a single record, ingested by a subclass to <a class="el" href="classcsv_1_1IngestionIface.html" title="An interface class to read records from an input stream.">csv::IngestionIface</a>.</p>
-<p>The constructor parses the string tokens and converts them to internal fields with the correct datatype, as retrieved from a provided specification.</p>
+<p>The record can then be examined by an <a class="el" href="classcsv_1_1EmitterIface.html" title="An interface class to emit records to an output stream.">csv::EmitterIface</a> subclass in order retrieve the data to be converted to a new format.</p>
 <p>Once constructed, the <a class="el" href="classcsv_1_1Record.html" title="A single record with parsed data.">Record</a> object remains immutable for its lifetime. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="aa068a21a6769778befe95ee819f5e234"></a>
@@ -130,6 +131,9 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Constructor. </p>
+<p>The constructor parses the string tokens and converts them to internal fields with the correct datatype, as retrieved from a provided specification.</p>
 <p>For fields of type <a class="el" href="namespacecsv.html#ac3808a26a4b7c05d635fcb2a3d4fb586a63b588d5559f64f89a416e656880b949">csv::FieldType::STRING</a>, the token is stored as-is in the internal variant vector.</p>
 <p>For fields of type <a class="el" href="namespacecsv.html#ac3808a26a4b7c05d635fcb2a3d4fb586a4e866b275c85fbb439f6484251cfb31c">csv::FieldType::INT64</a> and <a class="el" href="namespacecsv.html#ac3808a26a4b7c05d635fcb2a3d4fb586afd3e4ece78a7d422280d5ed379482229">csv::FieldType::DOUBLE</a>, the token is converted to a native int64_t or double before it is stored in the internal variant vector.</p>
 <dl class="params"><dt>Parameters</dt><dd>
