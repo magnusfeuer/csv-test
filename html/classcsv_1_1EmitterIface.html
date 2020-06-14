@@ -215,7 +215,7 @@ false - Header data could not be emitted. </dd></dl>
 
 <p>Emit a single record to an output stream. </p>
 <p>This method is to be redefined to emit the single provided record in the desired output format to the <em>output</em> file stream.</p>
-<p>The specification contains the format of the provided record. Specifically <a class="el" href="classcsv_1_1Specification.html#a93aced036f9fd20122982425f9181223" title="Return the field specification.">Specification::fields()</a> will provide the name and data type for each field retrieved through <a class="el" href="classcsv_1_1Record.html#ad295c93213213c6785fb36a58ffd9d91">Record::fields()</a>.</p>
+<p>The specification contains the format of the provided record. Specifically <a class="el" href="classcsv_1_1Specification.html#a93aced036f9fd20122982425f9181223" title="Return the field specification.">Specification::fields()</a> will provide the name and data type for each field retrieved through <a class="el" href="classcsv_1_1Record.html#ad295c93213213c6785fb36a58ffd9d91" title="Retrieve all fields in the record.">Record::fields()</a>.</p>
 <p>A typical sequence to write out a single record would be: </p><div class="fragment"><div class="line"><span class="keyword">auto</span> field_type_iter { specification.fields().begin() };</div>
 <div class="line"><span class="keywordflow">for</span>(<span class="keyword">const</span> <span class="keyword">auto</span>&amp; field: record.fields()) {</div>
 <div class="line"> </div>

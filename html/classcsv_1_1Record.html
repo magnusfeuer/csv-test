@@ -78,14 +78,17 @@ $(function() {
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:abaabca777684fbfc26953e6ae3c9cb34"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcsv_1_1Record.html#abaabca777684fbfc26953e6ae3c9cb34">Record</a> (const <a class="el" href="classcsv_1_1Specification.html">Specification</a> &amp;specification, std::size_t <a class="el" href="classcsv_1_1Record.html#a6bcefcd104cf20bb6d12779036528a22">index</a>, const std::vector&lt; std::string &gt; &amp;tokens)</td></tr>
+<tr class="memdesc:abaabca777684fbfc26953e6ae3c9cb34"><td class="mdescLeft">&#160;</td><td class="mdescRight">A single record with parsed data.  <a href="classcsv_1_1Record.html#abaabca777684fbfc26953e6ae3c9cb34">More...</a><br /></td></tr>
 <tr class="separator:abaabca777684fbfc26953e6ae3c9cb34"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a431c641954e8134165d1636277c65be7"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a431c641954e8134165d1636277c65be7"><td class="memTemplItemLeft" align="right" valign="top">const T &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classcsv_1_1Record.html#a431c641954e8134165d1636277c65be7">field</a> (int field_index) const</td></tr>
 <tr class="memdesc:a431c641954e8134165d1636277c65be7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve a single field. Throw an exception on type mismatch.  <a href="classcsv_1_1Record.html#a431c641954e8134165d1636277c65be7">More...</a><br /></td></tr>
 <tr class="separator:a431c641954e8134165d1636277c65be7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad295c93213213c6785fb36a58ffd9d91"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; std::variant&lt; int64_t, double, std::string &gt; &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcsv_1_1Record.html#ad295c93213213c6785fb36a58ffd9d91">fields</a> (void) const</td></tr>
+<tr class="memdesc:ad295c93213213c6785fb36a58ffd9d91"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve all fields in the record.  <a href="classcsv_1_1Record.html#ad295c93213213c6785fb36a58ffd9d91">More...</a><br /></td></tr>
 <tr class="separator:ad295c93213213c6785fb36a58ffd9d91"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6bcefcd104cf20bb6d12779036528a22"><td class="memItemLeft" align="right" valign="top">const std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcsv_1_1Record.html#a6bcefcd104cf20bb6d12779036528a22">index</a> () const</td></tr>
+<tr class="memdesc:a6bcefcd104cf20bb6d12779036528a22"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the index of this record.  <a href="classcsv_1_1Record.html#a6bcefcd104cf20bb6d12779036528a22">More...</a><br /></td></tr>
 <tr class="separator:a6bcefcd104cf20bb6d12779036528a22"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
@@ -121,6 +124,20 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>A single record with parsed data. </p>
+<p>This class stores data for a single record, ingested by a subclass to <a class="el" href="classcsv_1_1IngestionIface.html" title="An interface class to read records from an input stream.">csv::IngestionIface</a>.</p>
+<p>The constructor parses the string tokens and converts them to internal fields with the correct datatype, as retrieved from <em>specificaiton</em>.</p>
+<p>For fields of type <a class="el" href="namespacecsv.html#ac3808a26a4b7c05d635fcb2a3d4fb586a63b588d5559f64f89a416e656880b949">csv::FieldType::STRING</a>, the token is stored as-is in the internal variant vector.</p>
+<p>For fields of type <a class="el" href="namespacecsv.html#ac3808a26a4b7c05d635fcb2a3d4fb586a4e866b275c85fbb439f6484251cfb31c">csv::FieldType::INT64</a> and <a class="el" href="namespacecsv.html#ac3808a26a4b7c05d635fcb2a3d4fb586afd3e4ece78a7d422280d5ed379482229">csv::FieldType::DOUBLE</a>, the token is converted to a native int64_t or double before it is stored in the internal variant vector.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">specification</td><td>The specification to derive field data types from. </td></tr>
+    <tr><td class="paramname">index</td><td>The record index (0-n) for this record inside the full data set. </td></tr>
+    <tr><td class="paramname">tokens</td><td>Tokens, with or without whitespace to parse. </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -151,6 +168,14 @@ template&lt;typename T &gt; </div>
 </div><div class="memdoc">
 
 <p>Retrieve a single field. Throw an exception on type mismatch. </p>
+<p>Retrieve a single field from the record, with the given type <code>T</code>. Type conversion is not supported outside C++ built-in conversions.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">field_index</td><td>The index of the field in the variant vector.b</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Constant reference to the value of the field. </dd></dl>
 
 </div>
 </div>
@@ -178,6 +203,10 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
+<p>Retrieve all fields in the record. </p>
+<p>Retrieve all fields the record as a variant vector. The vector can have members of type <code>int64_t</code>, <code>double</code>, and <code>std::string</code>. Casting to the correct type is done via <code>std::get&lt;T&gt;</code>().</p>
+<dl class="section return"><dt>Returns</dt><dd>Constant reference to the variant vector. </dd></dl>
+
 </div>
 </div>
 <a id="a6bcefcd104cf20bb6d12779036528a22"></a>
@@ -202,6 +231,9 @@ template&lt;typename T &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Return the index of this record. </p>
+<dl class="section return"><dt>Returns</dt><dd>The same index value provided to the constructor. </dd></dl>
 
 </div>
 </div>
