@@ -1,0 +1,4 @@
+<map id="csv::EmitterYAML" name="csv::EmitterYAML">
+<area shape="rect" id="node1" title="A YAML Emitter class." alt="" coords="5,160,147,296"/>
+<area shape="rect" id="node2" href="$classcsv_1_1EmitterIface.html" title="An interface class to emit records to an output stream." alt="" coords="11,5,141,112"/>
+</map>
